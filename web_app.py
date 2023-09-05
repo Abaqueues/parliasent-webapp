@@ -1,20 +1,12 @@
-from flask import Flask
+from flask import Flask, abort, render_template, redirect, url_for
 from markupsafe import escape
 
 app = Flask(__name__)
 
 @app.route("/")
-@app.route("/index")
+@app.route("/index/")
 def hello():
-    return "<h1>Hello, World!</h1>"
-
-@app.route("/about/")
-def about():
-    return "<h3>About Page</h3>"
-
-@app.route("/capitalize/<word>/")
-def capitalize(word):
-    return "<h1>{}</h1>".format(escape(word.capitalize()))
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run()
