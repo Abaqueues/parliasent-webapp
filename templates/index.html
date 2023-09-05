@@ -14,7 +14,11 @@
     <a href="{{url_for("about")}}">About</a>
     
 {% block body %}
-<p>This is a Flask application.</p>
+<ul>
+    {% for row in data %}
+        <li>{{ row }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
 </body>
  
