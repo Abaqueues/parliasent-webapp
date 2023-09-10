@@ -1,7 +1,4 @@
-import os
-from flask import Flask, abort, render_template, redirect, url_for, request
-from markupsafe import escape
-from sqlalchemy import create_engine
+from flask import Flask, render_template, request
 from sqlalchemy.sql import func
 import psycopg2 as ps2
 
