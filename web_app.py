@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from sqlalchemy.sql import func
 import psycopg2 as ps2
 
 app = Flask(__name__)
@@ -15,7 +14,7 @@ def index():
 def data():
     conn = ps2.connect(_DATABASE_URI)
     cursor = conn.cursor()
-    cursor.execute("SELECT index, id, speakername, url, date, lr_prediction FROM speech_data")
+    cursor.execute("SELECT index, id, speakername, url, date, sgd_prediction FROM speech_data")
     data = cursor.fetchall()
     cursor.close()
     return render_template("data.html", data = data) 
@@ -29,10 +28,10 @@ def process_form():
     user_input = request.form.get('user_input')
     conn = ps2.connect(_DATABASE_URI)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT index, id, speakername, url, date, lr_prediction FROM speech_data WHERE speakername = '{user_input}'")
+    cursor.execute(f"SELECT index, id, speakername, url, date, lr_prediction FROM speech_data WHERE speakername = %(user_input)s", {'user_input': user_input})
     data = cursor.fetchall()
     cursor.close()
-    return render_template("data.html", data = data) 
+    return render_template("query.html", data = data) 
 
 # @app.teardown_appcontext
 # def close_connection(exception):
